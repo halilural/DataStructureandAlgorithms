@@ -2,7 +2,7 @@ package com.uralhalil.dsa;
 
 class ShortestPath {
 
-    static int V = 10;
+    static int V = 9;
 
     int min_distance(int[] dist, boolean[] spt) {
         int min_distance = Integer.MAX_VALUE, min_index = -1;
@@ -16,55 +16,61 @@ class ShortestPath {
     }
 
     void printResult(int[] dist) {
-        System.out.println("Vertex      Distance from Vertex");
+        System.out.println("Vertex   Distance from Source");
         for (int v = 0; v < V; v++) {
             System.out.println(v + " tt " + dist[v]);
         }
     }
 
-    void dijkstra(int graph[][], int source) {
+    void dijkstra(int[][] graph, int source) {
 
         int[] dist = new int[V];
-        boolean[] spt = new boolean[V];
+        boolean[] spts = new boolean[V];
+
+        // Assign initial values for each members of the arrays
 
         for (int i = 0; i < V; i++) {
             dist[i] = Integer.MAX_VALUE;
-            spt[i] = false;
+            spts[i] = false;
         }
+
+        // THe distance from the source is also 0
 
         dist[source] = 0;
 
         for (int counter = 0; counter < V; counter++) {
 
-            int u = min_distance(dist, spt);
+            int u = min_distance(dist, spts);
 
-            spt[u] = true;
+            spts[u] = true;
 
             for (int v = 0; v < V; v++) {
-                if (!spt[v] && graph[u][v] != 0 && dist[u] != Integer.MAX_VALUE
-                        && dist[u] + graph[u][v] < dist[v]) {
+                if (!spts[v] && graph[u][v] != 0 && dist[u] != Integer.MAX_VALUE
+                        && dist[u] + graph[u][v] < dist[v])
                     dist[v] = dist[u] + graph[u][v];
-                }
             }
         }
 
+
+        // printh the results
+
         printResult(dist);
+
     }
 
 
     // Driver method
     public static void main(String[] args) {
         /* Let us create the example graph discussed above */
-        int graph[][] = new int[][]{{0, 4, 0, 0, 0, 0, 0, 8, 0, 4}, // 0.vertex distance set
-                {4, 0, 8, 0, 0, 0, 0, 11, 0, 3}, // 1.vertex distance set
-                {0, 8, 0, 7, 0, 4, 0, 0, 2, 1}, // 2.vertex distance set
-                {0, 0, 7, 0, 9, 14, 0, 0, 0, 3}, // 3.vertex distance set
-                {0, 0, 0, 9, 0, 10, 0, 0, 0, 0}, // 4.vertex distance set
-                {0, 0, 4, 14, 10, 0, 2, 0, 0, 2}, // 5.vertex distance set
-                {0, 0, 0, 0, 0, 2, 0, 1, 6, 0}, // 6.vertex distance set
-                {8, 11, 0, 0, 0, 0, 1, 0, 7, 2}, // 7.vertex distance set
-                {0, 0, 2, 0, 0, 0, 6, 7, 0, 5},// 8.vertex distance set
-                {0, 0, 2, 0, 0, 0, 6, 7, 0, 5}}; // 9.vertex distance set
+        int graph[][] = new int[][]{{0, 4, 0, 0, 0, 0, 0, 8, 0}, // 0.vertex distance set
+                {4, 0, 8, 0, 0, 0, 0, 11, 0}, // 1.vertex distance set
+                {0, 8, 0, 7, 0, 4, 0, 0, 2}, // 2.vertex distance set
+                {0, 0, 7, 0, 9, 14, 0, 0, 0}, // 3.vertex distance set
+                {0, 0, 0, 9, 0, 10, 0, 0, 0}, // 4.vertex distance set
+                {0, 0, 4, 14, 10, 0, 2, 0, 0}, // 5.vertex distance set
+                {0, 0, 0, 0, 0, 2, 0, 1, 6}, // 6.vertex distance set
+                {8, 11, 0, 0, 0, 0, 1, 0, 7}, // 7.vertex distance set
+                {0, 0, 2, 0, 0, 0, 6, 7, 0}}; // 8.vertex distance set
         ShortestPath t = new ShortestPath();
         t.dijkstra(graph, 0);
     }
