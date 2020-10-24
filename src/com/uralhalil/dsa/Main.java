@@ -37,6 +37,19 @@ public class Main {
         System.out.println(evalPostNotation(new String[]{"2", "3", "4", "+", "*"})); // Infix Notation = ( (3 + 4 ) * 2)
         System.out.println(evalPostNotation(new String[]{"2", "1", "+", "3", "*"})); // Infix Notation = ( (2 + 1) * 3)
 
+        // Palindrome String
+
+        System.out.println(isPalindromeString("abc"));
+        System.out.println(isPalindromeString("aba"));
+        System.out.println(isPalindromeString("abad"));
+        System.out.println(isPalindromeString("ababa"));
+        System.out.println(isPalindromeString("ab a ba"));
+        System.out.println(isPalindromeString("ab a bA"));
+
+        // Remove all adjacent duplicates from given string
+        System.out.println(removeAllAdjacentDuplicates("aab"));
+        System.out.println(removeAllAdjacentDuplicates("ababdfdf"));
+        System.out.println(removeAllAdjacentDuplicates("Mississippi"));
     }
 
       /*
@@ -245,6 +258,141 @@ You may assume all the characters consist of printable ascii characters.
             }
         }
         return st.peek();
+    }
+
+    // Excel Sheet Column Number
+
+    // given column title, find column number
+
+    static int findExcelSheetColumnNumber(String title) {
+        // TC ->>> T = O(n)
+        // SC ->> S = O(1)
+        int ans = 0;
+        long pow = 1;
+        int n = title.length();
+        //AAA
+        for (int i = n - 1; i >= 0; i--) {
+            ans = (int) (ans + 26 * pow);
+            pow *= 26;
+        }
+        return ans;
+    }
+
+    // Palindrome String
+
+    // abc's reverse is cba, so this is not palindrome string
+    // aba's reverse is aba, so this is a palindrome string
+
+
+    static boolean isPalindromeString(String word) {
+        // Time complexity is a  T = O(n)
+        // Space complexity is a S = O(1)
+        int start = 0;
+        int end = word.length() - 1;
+
+        while (start <= end) {
+
+            // Skipping non digit or alphabetic character in the word
+
+            while (start < end && !Character.isLetterOrDigit(word.charAt(start))) start++;
+            while (start < end && !Character.isLetterOrDigit(word.charAt(end))) end--;
+
+            // Converting the character which in index start and end
+
+            if (Character.toUpperCase(word.charAt(start)) != Character.toUpperCase(word.charAt(end))) {
+                return false;
+            }
+            start++;
+            end--;
+        }
+        return true;
+    }
+
+    // Valid Palindrome String
+
+    // Given a non-empty string, you may delete at most one character,jusge whether you can make it  a palindrome.
+
+    //For example, you have abca and delete the 'c' character from the given string and you have 'aba' word, so it is palindrome string
+
+    static boolean checkPalindrome(String word, int start, int end) {
+        while (start <= end) {
+            if (word.charAt(start) != word.charAt(end)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    static boolean validPalindrome(String word) {
+        // T = O(n)
+        // S = O(1)
+        int start = 0;
+        int end = word.length() - 1;
+
+        while (start <= end) {
+            if (Character.toUpperCase(word.charAt(start)) != Character.toUpperCase(word.charAt(end))) {
+                //2 cases
+                //delete s check for word[s+1....e]
+                //delete e check for word[s......e-1]
+                if (checkPalindrome(word, start + 1, end) || checkPalindrome(word, start, end - 1)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            start++;
+            end--;
+        }
+        return true;
+    }
+
+    // Remove all adjacent duplicates from given word
+
+    // Return string will not contain duplicate characters
+
+    // For instance, the given string is "aab", so the final result is "b",
+    // Another example is the given string is "Mississippi", so the final result is "M".
+
+    static String removeAllAdjacentDuplicates(String word) {
+        // T = O(n)
+        // S = O(n), because we are creating stack to solve the problem.
+        Stack<Character> st = new Stack<>();
+        for (int i = 0; i < word.length(); i++) {
+            if (st.empty()) {
+                st.push(word.charAt(i));
+            } else {
+                Stack<Character> tempst = (Stack<Character>) st.clone();
+                Boolean isFound = false;
+                while (!tempst.empty()) {
+                    if (tempst.peek() == word.charAt(i)) {
+                        st.pop();
+                        isFound = true;
+                        break;
+                    }
+                    tempst.pop();
+                }
+                if (!isFound) st.push(word.charAt(i));
+            }
+        }
+        char[] answer = new char[st.size()];
+        int n = st.size();
+        for (int i = 0; i < n; i++) {
+            answer[i] = st.peek();
+            st.pop();
+        }
+        // Reverse String
+        reverseString(answer);
+        // Convert char[] to string
+        String ans = "";
+        for (int i = 0; i < answer.length; i++) {
+            ans += answer[i];
+        }
+
+        if (ans.length() == 0) {
+            return "Empty String";
+        }
+
+        return ans;
     }
 
 }
