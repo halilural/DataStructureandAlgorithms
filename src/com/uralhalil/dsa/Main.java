@@ -16,6 +16,16 @@ public class Main {
         reverseStringwithStack(characters); // Output is "OLLEH"
         reverseString(characters); // Output is "HELLO"
 
+        // Longest Common Prefix
+        System.out.println(longestCommonPrefix(new String[]{"Hello", "Hello123", "Hello1234"}));
+
+        // Majority Element
+
+        System.out.println(majorityElement(new int[]{3, 2, 3}));
+        System.out.println(majorityElement(new int[]{1, 2, 3}));
+        System.out.println(majorityElement(new int[]{1, 2, 3, 4}));
+        System.out.println(majorityElement(new int[]{1, 2, 2, 4}));
+        System.out.println(majorityElement(new int[]{2, 2, 2, 4}));
 
     }
 
@@ -103,25 +113,75 @@ You may assume all the characters consist of printable ascii characters.
 
     If there is no common prefix, return an empty string "".
 
-    Example 1:
+      */
 
-      Input: strs = ["flower","flow","flight"]
-      Output: "fl"
-      Example 2:
+    static String longestCommonPrefix(String[] strs) {
 
-      Input: strs = ["dog","racecar","car"]
-      Output: ""
-      Explanation: There is no common prefix among the input strings.
+        // Time Complexity T = O(mn)
+        // m = length of the smallest string
+        // n is length of the strs's array size
+        // Space Complexity
+        // Space taken is ans string, that's why the space complexity is big of m.
+        // s = O(m).
 
+        String ans = "";
+        int minLength;
+        String minString = "";
+        // find minimum string
+        if (strs.length == 0) {
+            return "";
+        }
+        minLength = strs[0].length();
+        minString = strs[0];
+        for (int i = 0; i < strs.length; i++) {
+            if (minLength > strs[i].length()) {
+                minString = strs[i];
+                minLength = strs[i].length();
+            }
+        }
+        // find longest Common Prefix
+        for (int i = 0; i < minString.length(); i++) {
+            for (int k = 0; k < strs.length; k++) {
+                if (minString.charAt(i) != strs[k].charAt(i)) {
+                    return ans;
+                }
+            }
+            ans += minString.charAt(i);
+        }
+        return ans;
+    }
 
-    Constraints:
+    // Find Majority Element
 
-      0 <= strs.length <= 200
-      0 <= strs[i].length <= 200
-      strs[i] consists of only lower-case English letters.
-
-     */
-
-
+    static int majorityElement(int[] nums) {
+        // Time Complexity, we are iterating over the array, that's why it is T = O(n)
+        // Space Complexity,  S= O(1), we are not using any array or space-taken variables in this algorithm.
+        if (nums.length == 0) {
+            return -1;
+        }
+        int cand = nums[0];
+        int count = 1;
+        int n = nums.length;
+        for (int i = 1; i < n; i++) {
+            if (nums[i] == cand) {
+                count++;
+            } else {
+                count--;
+                if (count == 0) {
+                    cand = nums[i];
+                    count = 1;
+                }
+            }
+        }
+        // we can not assume, so we check
+        int count2 = 0;
+        for (int i = 0; i < n; i++) {
+            if (nums[i] == cand) {
+                count2++;
+            }
+        }
+        if (count2 > n / 2) return cand;
+        else return -1;
+    }
 
 }
