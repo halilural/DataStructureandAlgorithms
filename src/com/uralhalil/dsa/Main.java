@@ -1,6 +1,7 @@
 package com.uralhalil.dsa;
 
 import java.util.Stack;
+import java.util.Vector;
 
 public class Main {
 
@@ -27,6 +28,9 @@ public class Main {
         System.out.println(majorityElement(new int[]{1, 2, 2, 4}));
         System.out.println(majorityElement(new int[]{2, 2, 2, 4}));
 
+        // Fizz Buzz Algorithm
+        System.out.println(fizzBuzz(5));
+        System.out.println(fizzBuzz(15));
     }
 
       /*
@@ -182,6 +186,30 @@ You may assume all the characters consist of printable ascii characters.
         }
         if (count2 > n / 2) return cand;
         else return -1;
+    }
+
+    // Fizz Buzz
+
+    static Vector<String> fizzBuzz(int n) {
+
+        // Time Complexity is T = O(n), because we are iterating the n number and if it increases,
+        // the runtime execution time will also increase.
+        // Space Complexity is S = O(1), because ans is not taken extra space, we need it for returning Vector<String>.
+        // This is basically required.
+
+        Vector<String> ans = new Vector<>();
+        for (int i = 1; i <= n; i++) {
+            if (i % 3 == 0 && i % 5 == 0) {
+                ans.add("FizzBuzz");
+            } else if (i % 3 == 0) {
+                ans.add("Fizz");
+            } else if (i % 5 == 0) {
+                ans.add("Buzz");
+            } else {
+                ans.add(Integer.toString(i));
+            }
+        }
+        return ans;
     }
 
 }
