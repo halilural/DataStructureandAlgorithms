@@ -50,6 +50,13 @@ public class Main {
         System.out.println(removeAllAdjacentDuplicates("aab"));
         System.out.println(removeAllAdjacentDuplicates("ababdfdf"));
         System.out.println(removeAllAdjacentDuplicates("Mississippi"));
+
+        // Remove all adjacent duplicates from given string without stack
+
+        System.out.println(removeAllAdjacentDuplicateswithoutStack(new char[]{'a', 'a', 'b'}));
+        System.out.println(removeAllAdjacentDuplicateswithoutStack(new char[]{'a', 'b', 'a', 'b', 'd', 'f', 'd', 'f'}));
+        System.out.println(removeAllAdjacentDuplicateswithoutStack(new char[]{'M', 'i', 's', 's', 'i', 's', 's', 'i', 'p', 'p', 'i'}));
+
     }
 
       /*
@@ -394,5 +401,38 @@ You may assume all the characters consist of printable ascii characters.
 
         return ans;
     }
+
+    // We need to get down O(n) to O(1) so, we need to write algorithm without stack.
+
+    static String replaceChar(String str, char ch, int index) {
+        return str.substring(0, index) + ch + str.substring(index + 1);
+    }
+
+    static String removeAllAdjacentDuplicateswithoutStack(char[] word) {
+        // T = O(n)
+        // S = O(1).
+
+        // AAB ->> A
+
+        /// simulate inplace stack
+        int stptr = -1;
+        for (int i = 0; i < word.length; i++) {
+            if (stptr == -1 || word[i] != word[stptr]) {
+                stptr++;
+                word[stptr] = word[i];
+            } else {
+                stptr--;
+            }
+        }
+        String ans = "";
+        for (int i = 0; i <= stptr; i++) {
+            ans += word[i];
+        }
+        return ans;
+    }
+
+    // Shortest Path Algoritm
+
+
 
 }
