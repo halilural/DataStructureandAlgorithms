@@ -127,7 +127,7 @@ function getLargestItem(items) {
 
 ```
 
-#### How Should We Optimize Our Code?
+#### How Should We Optimize Our Code?
 
 If we have different solutions for one question, we can compare their runtime to get the answer. When they achieve the same thing, constant time O(1) is probably better than linear time O(n). However, time complexities is not the only factor you should take into account. You should also consider is your code readable enough, how much memory is your code going to consume.
 
