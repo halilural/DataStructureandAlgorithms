@@ -31,6 +31,12 @@ public class Main {
         // Fizz Buzz Algorithm
         System.out.println(fizzBuzz(5));
         System.out.println(fizzBuzz(15));
+
+        // Evaluate Pos Notation
+
+        System.out.println(evalPostNotation(new String[]{"2", "3", "4", "+", "*"})); // Infix Notation = ( (3 + 4 ) * 2)
+        System.out.println(evalPostNotation(new String[]{"2", "1", "+", "3", "*"})); // Infix Notation = ( (2 + 1) * 3)
+
     }
 
       /*
@@ -210,6 +216,35 @@ You may assume all the characters consist of printable ascii characters.
             }
         }
         return ans;
+    }
+
+    // Evaluate Expression Algorithm
+
+    static int evalPostNotation(String[] tokens) {
+        // Time Complexity is T = O(n), we are iterationg the array.
+        // Space Complexity is S = O(n), we are using stack as an extra memory to calculate return.
+        Stack<Integer> st = new Stack<>();
+        for (int i = 0; i < tokens.length; i++) {
+            if (tokens[i] == "+" || tokens[i] == "-" || tokens[i] == "/" || tokens[i] == "*") {
+                // 2 elements pop from the stack and do operations between them using operator
+                Integer v1 = st.peek();
+                st.pop();
+                Integer v2 = st.peek();
+                st.pop();
+                if (tokens[i] == "+") {
+                    st.push(v1 + v2);
+                } else if (tokens[i] == "-") {
+                    st.push(v1 - v2);
+                } else if (tokens[i] == "/") {
+                    st.push(v1 / v2);
+                } else if (tokens[i] == "*") {
+                    st.push(v1 * v2);
+                }
+            } else {
+                st.push(Integer.parseInt(tokens[i]));
+            }
+        }
+        return st.peek();
     }
 
 }
