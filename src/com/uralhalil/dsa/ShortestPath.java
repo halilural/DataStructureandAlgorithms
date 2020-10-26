@@ -24,15 +24,19 @@ class ShortestPath {
 
     void dijkstra(int[][] graph, int source) {
 
-        int[] dist = new int[V];
-        boolean[] spts = new boolean[V];
+        int[] dist = new int[V];  // O(v)
+        boolean[] spts = new boolean[V]; // O(v)
+
+        // Time Complexity = c1 * v + c2 * v
 
         // Assign initial values for each members of the arrays
 
-        for (int i = 0; i < V; i++) {
-            dist[i] = Integer.MAX_VALUE;
-            spts[i] = false;
+        for (int i = 0; i < V; i++) {  // v times
+            dist[i] = Integer.MAX_VALUE; // O(1)
+            spts[i] = false; // O(1)
         }
+
+        //
 
         // THe distance from the source is also 0
 
@@ -75,4 +79,3 @@ class ShortestPath {
         t.dijkstra(graph, 0);
     }
 }
-// This code is contributed by Aakash Hasija
